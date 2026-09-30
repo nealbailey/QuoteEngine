@@ -1,0 +1,28 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug QuoteEngine (PHP server)",
+      "type": "php",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "program": "",
+      "runtimeArgs": [
+        "-dxdebug.start_with_request=yes",
+        "-S",
+        "127.0.0.1:8000",
+        "-t",
+        "${workspaceFolder}"
+      ],
+      "env": {
+        "XDEBUG_MODE": "debug,develop"
+      },
+      "port": 9003,
+      "serverReadyAction": {
+        "pattern": "Development Server \\(http://127\\.0\\.0\\.1:8000\\) started",
+        "uriFormat": "http://127.0.0.1:8000/",
+        "action": "openExternally"
+      }
+    }
+  ]
+}

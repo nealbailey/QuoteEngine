@@ -71,6 +71,7 @@ Quotes are stored in [`data/quotes.xml`](data/quotes.xml). Back up this file bef
 
 ## Debugging
 
+- With the PHP Debug VS Code extension and Xdebug installed, select **Debug QuoteEngine (PHP server)** in Run and Debug and press F5. It starts the local server at <http://127.0.0.1:8000/> and opens the app. Set a breakpoint in `getquotes.php` or `submit.php`, then make the corresponding request in the browser. Stop the debug session to stop the server. Do not run a separate server on port 8000 at the same time.
 - Watch the terminal running `php -S` for PHP errors and request details.
 - Run PHP's syntax checker on a file, for example `php -l getquotes.php`. Repeat for the PHP files you changed.
 - Use `curl -i` on an endpoint to inspect its HTTP status, headers, and response body.

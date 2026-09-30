@@ -2,7 +2,7 @@
 /*
 * Source File: ApiRequest.php
 * Create Date: 08/31/2015 13:33
-* Last Updated: 08/31/2015 13:33
+* Last Updated: 09/30/2026 11:16
 * Author: Neal T. Bailey <nealbailey@hotmail.com>
 *
 * ----------------------------------------------------------------------
@@ -23,6 +23,18 @@
 
  /**
  * Class for encapsulating query string api parameters
+ * @property string $Author The author of the quote being requested.
+ * @property string $QueryString The raw query string from the request.
+ * @property string $Quote The text of the quote being requested.
+ * @property string $Search The search term used to filter quotes.
+ * @property string $SortBy The field to sort by ('author', 'date', or 'random').
+ * @property string $SortOrder The sort order ('asc' or 'desc').
+ * @property string $Format The response format ('text' or 'json').
+ * @property int $Page The page number for paginated results.
+ * @property int $Limit The maximum number of quotes to return.
+ * @property bool $IsPostBack Indicates if the request is a POST request.
+ * @property string $OriginalAdded The original added date of the quote being edited.
+ * @property string $OriginalAuthor The original author of the quote being edited.
  */
   class ApiRequest {
     public $Author;
@@ -35,6 +47,8 @@
     public $Page;
     public $Limit;
     public $IsPostBack;
+    public $OriginalAdded;
+    public $OriginalAuthor;
 
     /**
     * Default Constructor
@@ -53,7 +67,7 @@
     * @static
     * Performs inout validation to prevent known injection attacks.
     * @param string $value The user provided string to clean
-    * @returns string
+    * @returns string The sanitized string.
     */
     public static function SanitizeString($value)
     {
@@ -65,7 +79,7 @@
     */
     function Process()
     {
-      $this->QueryString = $_SERVER['QUERY_STRING'];
+      $this->QueryString = $_SERVER['QUERY_STRING'] ?? '';
       
       if (!empty($_POST)) {
         $this->IsPostBack = true;
@@ -81,6 +95,10 @@
       }
       if (isset($_REQUEST['quote'])) {
         $this->Quote = ApiRequest::SanitizeString($_REQUEST['quote']);
+      }
+      if (isset($_POST['original_added'], $_POST['original_author'])) {
+        $this->OriginalAdded = ApiRequest::SanitizeString($_POST['original_added']);
+        $this->OriginalAuthor = ApiRequest::SanitizeString($_POST['original_author']);
       }
       if (isset($_REQUEST['search'])) {
         $this->Search = ApiRequest::SanitizeString($_REQUEST['search']);

@@ -1,9 +1,9 @@
 <?php
 /*
-* Source File: Quote.php
-* Create Date: 08/31/2015 11:00
+* Source File:  Quote.php
+* Create Date:  08/31/2015 11:00
 * Last Updated: 08/31/2015 11:00
-* Author: Neal T. Bailey <nealbailey@hotmail.com>
+* Author:       Neal T. Bailey <nealbailey@hotmail.com>
 *
 * ----------------------------------------------------------------------
 * GNU GENERAL PUBLIC LICENSE
@@ -20,9 +20,11 @@
 * Copyright (c) 2010-2015 Baileysoft Solutions
 *-----------------------------------------------------------------------
 */
-
  /**
  * Class for encapsulating a quote object
+ * @property string $Added The date the quote was added.
+ * @property string $Author The author of the quote.
+ * @property string $Value The text of the quote.
  */
   class Quote {
     public $Added;

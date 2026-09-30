@@ -1,9 +1,9 @@
 <?php
 /*
-* Source File: submit.php
-* Create Date: 09/15/2015 10:19
-* Last Updated: 09/15/2015 10:19
-* Author: Neal T. Bailey <nealbailey@hotmail.com>
+* Source File:  submit.php
+* Create Date:  09/15/2015 10:19
+* Last Updated: 09/30/2026 11:26
+* Author:       Neal T. Bailey <nealbailey@hotmail.com>
 *
 * ----------------------------------------------------------------------
 * GNU GENERAL PUBLIC LICENSE
@@ -41,15 +41,24 @@ if (empty($apiRequest->Author) || empty($apiRequest->Quote)) {
   exit;
 }
 
-try {
-  if (!$quoteModel->InsertQuote($apiRequest->Author, $apiRequest->Quote)) {
-    http_response_code(409);
-    echo json_encode(array('success' => false, 'message' => 'That quote already exists.'));
-    exit;
-  }
+$isEdit = !empty($apiRequest->OriginalAdded) && !empty($apiRequest->OriginalAuthor);
 
-  http_response_code(201);
-  echo json_encode(array('success' => true, 'message' => 'Quote added to the collection.'));
+try {
+  if ($isEdit) {
+    $quote = $quoteModel->UpdateQuote($apiRequest->OriginalAdded, $apiRequest->OriginalAuthor, $apiRequest->Author, $apiRequest->Quote);
+    http_response_code(200);
+    echo json_encode(array('success' => true, 'message' => 'Quote updated.', 'quote' => $quote));
+  } else {
+    $quote = $quoteModel->InsertQuote($apiRequest->Author, $apiRequest->Quote);
+    http_response_code(201);
+    echo json_encode(array('success' => true, 'message' => 'Quote added to the collection.', 'quote' => $quote));
+  }
+} catch (QuoteConflictException $exception) {
+  http_response_code(409);
+  echo json_encode(array('success' => false, 'message' => $exception->getMessage()));
+} catch (QuoteNotFoundException $exception) {
+  http_response_code(404);
+  echo json_encode(array('success' => false, 'message' => $exception->getMessage()));
 } catch (RuntimeException $exception) {
   http_response_code(500);
   echo json_encode(array('success' => false, 'message' => $exception->getMessage()));

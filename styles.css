@@ -155,6 +155,9 @@ blockquote {
 }
 svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .icon-button:hover, .page-button:hover { color: var(--white); background: var(--ink); }
+.quote-actions { display: flex; gap: 12px; }
+.icon-button[aria-pressed="true"] { color: var(--white); border-color: var(--forest); background: var(--forest); }
+.icon-button:disabled { opacity: .3; cursor: not-allowed; }
 
 .quotes-panel, .submit-panel { padding: clamp(40px, 6vw, 84px) clamp(20px, 7vw, 110px); }
 .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 32px; margin-bottom: 36px; }
@@ -183,6 +186,8 @@ th:first-child { width: 60%; }
 td:first-child { font-family: "Libre Caslon Display", serif; font-size: 1.2rem; line-height: 1.45; }
 td:nth-child(2) { font-weight: 500; }
 td:nth-child(3) { color: var(--muted); white-space: nowrap; }
+.quote-row { cursor: pointer; transition: background-color 150ms ease; }
+.quote-row:hover, .quote-row:focus-visible { background: var(--paper-deep); outline: none; box-shadow: inset 3px 0 0 var(--accent); }
 .sort-button { padding: 0; border: 0; background: transparent; font-weight: 600; text-transform: uppercase; cursor: pointer; }
 .sort-button span { color: var(--accent); }
 .empty-state { padding: 48px; text-align: center; color: var(--muted); }
@@ -200,6 +205,9 @@ td:nth-child(3) { color: var(--muted); white-space: nowrap; }
 #form-message.is-error { color: #ffc2b8; }
 .primary-button { min-height: 50px; padding: 0 22px; border: 0; background: var(--white); color: var(--forest); font-weight: 600; cursor: pointer; white-space: nowrap; }
 .primary-button:hover { background: #e8b344; }
+.form-buttons { display: flex; gap: 12px; }
+.secondary-button { min-height: 50px; padding: 0 22px; border: 1px solid rgba(255,255,255,.5); background: transparent; color: var(--white); font-weight: 600; cursor: pointer; white-space: nowrap; }
+.secondary-button:hover { border-color: var(--white); }
 
 @media (max-width: 760px) {
   .site-header { padding: 14px 18px 0; align-items: flex-start; flex-direction: column; gap: 12px; }
