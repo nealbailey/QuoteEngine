@@ -6,6 +6,8 @@
 
 A small quote collection web app. Browse random quotes, search and sort the collection, and add new entries. The PHP service stores quotes in an XML file; no database is required.
 
+![QuoteEngine app screenshot](screenshot.png)
+
 ## Requirements
 
 - PHP with the `dom` and `json` extensions enabled.
