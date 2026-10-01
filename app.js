@@ -21,6 +21,26 @@ let searchTimer;
 let quotesController;
 let currentQuote = null;
 
+/**
+ * Adjusts the font size of the random quote to fit within the available viewport height.
+ */
+function fitRandomQuote() {
+  const quoteElement = document.querySelector("#random-quote");
+  quoteElement.style.fontSize = "";
+  if (!window.matchMedia("(min-width: 761px)").matches || document.querySelector("#random").hidden) return;
+
+  const content = document.querySelector(".random-content");
+  const availableHeight = window.innerHeight - document.querySelector(".site-header").offsetHeight;
+  let fontSize = parseFloat(getComputedStyle(quoteElement).fontSize);
+  while (content.scrollHeight > availableHeight && fontSize > 28) {
+    fontSize = Math.max(28, fontSize - 2);
+    quoteElement.style.fontSize = `${fontSize}px`;
+  }
+}
+
+window.addEventListener("resize", fitRandomQuote);
+document.fonts.ready.then(fitRandomQuote);
+
 //<summary>
 // Activates the specified tab and updates the URL hash.
 // @param {string} panelId The ID of the panel to activate.
@@ -36,6 +56,7 @@ function activateTab(panelId) {
     panel.classList.toggle("is-active", panel.id === panelId);
   });
   history.replaceState(null, "", `#${panelId}`);
+  if (panelId === "random") fitRandomQuote();
 }
 
 tabs.forEach((tab) => tab.addEventListener("click", () => activateTab(tab.dataset.tab)));
@@ -77,8 +98,10 @@ async function loadRandomQuote() {
     quoteElement.textContent = data.quotes[0]?.Value || "The collection is waiting for its first quote.";
     authorElement.textContent = data.quotes[0]?.Author || "";
     setCurrentQuote(data.quotes[0] || null);
+    fitRandomQuote();
   } catch (error) {
     quoteElement.textContent = error.message;
+    fitRandomQuote();
   }
 }
 
@@ -309,6 +332,7 @@ document.querySelector("#quote-form").addEventListener("submit", async (event) =
       document.querySelector("#random-quote").textContent = data.quote.Value;
       document.querySelector("#random-author").textContent = data.quote.Author;
       setCurrentQuote(data.quote);
+      fitRandomQuote();
     }
     authorFilter.replaceChildren(new Option("All authors", ""));
     document.querySelector("#author-options").replaceChildren();

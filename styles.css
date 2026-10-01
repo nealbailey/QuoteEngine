@@ -209,6 +209,11 @@ td:nth-child(3) { color: var(--muted); white-space: nowrap; }
 .secondary-button { min-height: 50px; padding: 0 22px; border: 1px solid rgba(255,255,255,.5); background: transparent; color: var(--white); font-weight: 600; cursor: pointer; white-space: nowrap; }
 .secondary-button:hover { border-color: var(--white); }
 
+@media (min-width: 761px) {
+  .random-panel { height: calc(100vh - 82px); grid-template-rows: minmax(0, 1fr); }
+  .random-content { max-height: 100%; overflow-y: auto; }
+}
+
 @media (max-width: 760px) {
   .site-header { padding: 14px 18px 0; align-items: flex-start; flex-direction: column; gap: 12px; }
   .tabs { width: 100%; height: 46px; justify-content: space-between; gap: 12px; }
